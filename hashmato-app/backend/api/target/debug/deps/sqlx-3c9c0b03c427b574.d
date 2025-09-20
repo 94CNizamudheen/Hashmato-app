@@ -1,0 +1,11 @@
+C:\My projects\Hashmato-app\hashmato-app\backend\api\target\debug\deps\sqlx-3c9c0b03c427b574.d: C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlx-0.7.4\src\lib.rs C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlx-0.7.4\src\any\mod.rs C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlx-0.7.4\src\macros\mod.rs C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlx-0.7.4\src\ty_match.rs C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlx-0.7.4\src\lib.md C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlx-0.7.4\src\macros/test.md C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlx-0.7.4\src\any\install_drivers_note.md
+
+C:\My projects\Hashmato-app\hashmato-app\backend\api\target\debug\deps\libsqlx-3c9c0b03c427b574.rmeta: C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlx-0.7.4\src\lib.rs C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlx-0.7.4\src\any\mod.rs C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlx-0.7.4\src\macros\mod.rs C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlx-0.7.4\src\ty_match.rs C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlx-0.7.4\src\lib.md C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlx-0.7.4\src\macros/test.md C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlx-0.7.4\src\any\install_drivers_note.md
+
+C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlx-0.7.4\src\lib.rs:
+C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlx-0.7.4\src\any\mod.rs:
+C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlx-0.7.4\src\macros\mod.rs:
+C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlx-0.7.4\src\ty_match.rs:
+C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlx-0.7.4\src\lib.md:
+C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlx-0.7.4\src\macros/test.md:
+C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sqlx-0.7.4\src\any\install_drivers_note.md:

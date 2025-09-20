@@ -1,0 +1,58 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT oi.id, oi.order_id, oi.menu_item_id, oi.quantity,\n                   mi.name as menu_name, mi.price as \"menu_price!\", mi.image_url as menu_image\n            FROM order_items oi\n            JOIN menu_items mi ON mi.id = oi.menu_item_id\n            WHERE oi.order_id = $1\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "order_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 2,
+        "name": "menu_item_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 3,
+        "name": "quantity",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 4,
+        "name": "menu_name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "menu_price!",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 6,
+        "name": "menu_image",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int4"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "942fd9674a5672818a2762091edbe08694b6a21252e7a7532b0ebae2d9338a3d"
+}
