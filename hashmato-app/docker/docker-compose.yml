@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:15
+    container_name: hashmato-postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: hashmato
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:

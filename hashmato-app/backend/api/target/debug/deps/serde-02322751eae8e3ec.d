@@ -1,0 +1,14 @@
+C:\My projects\Hashmato-app\hashmato-app\backend\api\target\debug\deps\serde-02322751eae8e3ec.d: C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.225\src\lib.rs C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.225\src\integer128.rs C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.225\src\private\mod.rs C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.225\src\private\de.rs C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.225\src\private\ser.rs C:\My\ projects\Hashmato-app\hashmato-app\backend\api\target\debug\build\serde-927f116a0dd3058b\out/private.rs
+
+C:\My projects\Hashmato-app\hashmato-app\backend\api\target\debug\deps\libserde-02322751eae8e3ec.rlib: C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.225\src\lib.rs C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.225\src\integer128.rs C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.225\src\private\mod.rs C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.225\src\private\de.rs C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.225\src\private\ser.rs C:\My\ projects\Hashmato-app\hashmato-app\backend\api\target\debug\build\serde-927f116a0dd3058b\out/private.rs
+
+C:\My projects\Hashmato-app\hashmato-app\backend\api\target\debug\deps\libserde-02322751eae8e3ec.rmeta: C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.225\src\lib.rs C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.225\src\integer128.rs C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.225\src\private\mod.rs C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.225\src\private\de.rs C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.225\src\private\ser.rs C:\My\ projects\Hashmato-app\hashmato-app\backend\api\target\debug\build\serde-927f116a0dd3058b\out/private.rs
+
+C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.225\src\lib.rs:
+C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.225\src\integer128.rs:
+C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.225\src\private\mod.rs:
+C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.225\src\private\de.rs:
+C:\Users\nisun\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.225\src\private\ser.rs:
+C:\My\ projects\Hashmato-app\hashmato-app\backend\api\target\debug\build\serde-927f116a0dd3058b\out/private.rs:
+
+# env-dep:OUT_DIR=C:\\My projects\\Hashmato-app\\hashmato-app\\backend\\api\\target\\debug\\build\\serde-927f116a0dd3058b\\out
