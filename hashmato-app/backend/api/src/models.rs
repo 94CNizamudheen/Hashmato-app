@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 use sqlx::FromRow;
+use chrono::NaiveDateTime;
 
 #[derive(Debug, Serialize, Deserialize, FromRow)]
 pub struct MenuItem {
@@ -14,7 +15,7 @@ pub struct Order {
     pub id: i32,
     pub source: String,
     pub status: String,
-    pub created_at: chrono::NaiveDateTime,
+    pub created_at: NaiveDateTime,
 }
 
 #[derive(Debug, Serialize, Deserialize, FromRow)]
@@ -23,6 +24,18 @@ pub struct OrderItem {
     pub order_id: i32,
     pub menu_item_id: i32,
     pub quantity: i32,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct CreateOrderItem {
+    pub menu_item_id: i32,
+    pub quantity: i32,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct CreateOrder {
+    pub source: String, 
+    pub items: Vec<CreateOrderItem>,
 }
 
 #[derive(Debug, Serialize, Deserialize, FromRow)]
