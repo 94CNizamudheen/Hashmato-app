@@ -1,10 +1,15 @@
 import { ReceiptPayload, OrderDetailed } from "../types";
 
+function showModal(type: "drawer" | "receipt", payload?: any) {
+  const event = new CustomEvent("peripheral-action", { detail: { type, payload } });
+  window.dispatchEvent(event);
+}
+
 export async function openDrawer(): Promise<void> {
   if (window.__TAURI__) {
     await window.__TAURI__.invoke("open_drawer");
   } else {
-    console.log("stub: openDrawer");
+    showModal("drawer");
   }
 }
 
@@ -22,6 +27,6 @@ export async function printReceipt(order: OrderDetailed): Promise<void> {
   if (window.__TAURI__) {
     await window.__TAURI__.invoke("print_receipt", { payload });
   } else {
-    console.log("stub: printReceipt", payload);
+    showModal("receipt", payload);
   }
 }

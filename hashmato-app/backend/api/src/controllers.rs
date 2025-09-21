@@ -22,7 +22,6 @@ const ALLOWED_STATUSES: &[&str] = &["pending", "preparing", "ready", "completed"
 const ALLOWED_EXTENSIONS: &[&str] = &["jpg", "jpeg", "png", "gif", "webp"];
 const MAX_FILE_SIZE: usize = 5 * 1024 * 1024; // 5MB
 
-/// List available menu items
 pub async fn list_menu(State(state): State<AppState>) -> Result<Json<Vec<MenuItem>>, (StatusCode, String)> {
     let items = sqlx::query_as::<_, MenuItem>(
         "SELECT * FROM menu_items WHERE available = true ORDER BY id ASC"
@@ -34,7 +33,6 @@ pub async fn list_menu(State(state): State<AppState>) -> Result<Json<Vec<MenuIte
     Ok(Json(items))
 }
 
-/// Create menu item with proper validation
 pub async fn create_menu_item(
     State(state): State<AppState>,
     Json(payload): Json<serde_json::Value>
@@ -49,7 +47,6 @@ pub async fn create_menu_item(
         .filter(|p| *p >= 0.0)
         .ok_or((StatusCode::BAD_REQUEST, "Valid price is required".to_string()))?;
     
-    // Convert f64 to BigDecimal
     let price_decimal = BigDecimal::from_str(&price.to_string())
         .map_err(|_| (StatusCode::BAD_REQUEST, "Invalid price format".to_string()))?;
     
@@ -69,7 +66,6 @@ pub async fn create_menu_item(
     Ok(Json(json!({"id": id, "status": "created"})))
 }
 
-/// Upload image with proper validation
 pub async fn upload_image(
     mut multipart: Multipart,
 ) -> Result<Json<serde_json::Value>, (StatusCode, String)> {
@@ -86,17 +82,13 @@ pub async fn upload_image(
         let file_name = field.file_name()
             .map(|s| s.to_string())
             .unwrap_or_else(|| format!("upload-{}", Uuid::new_v4()));
-        
         let data = field.bytes()
             .await
             .map_err(|e| (StatusCode::BAD_REQUEST, format!("Failed to read file data: {}", e)))?;
-
-        // Validate file size
         if data.len() > MAX_FILE_SIZE {
             return Err((StatusCode::PAYLOAD_TOO_LARGE, "File size exceeds 5MB limit".to_string()));
         }
 
-        // Validate file extension
         let ext = std::path::Path::new(&file_name)
             .extension()
             .and_then(|e| e.to_str())
@@ -121,7 +113,6 @@ pub async fn upload_image(
     Err((StatusCode::BAD_REQUEST, "No file field found".to_string()))
 }
 
-/// Create an order with better error handling
 pub async fn create_order(
     State(state): State<AppState>,
     Json(payload): Json<CreateOrder>
@@ -176,7 +167,6 @@ pub async fn create_order(
     Ok(Json(json!({ "order_id": order_id, "status": "created" })))
 }
 
-/// List orders
 pub async fn list_orders(State(state): State<AppState>) -> Result<Json<Vec<Order>>, (StatusCode, String)> {
     let orders = sqlx::query_as::<_, Order>("SELECT * FROM orders ORDER BY created_at DESC")
         .fetch_all(&state.pool)
@@ -186,7 +176,6 @@ pub async fn list_orders(State(state): State<AppState>) -> Result<Json<Vec<Order
     Ok(Json(orders))
 }
 
-/// List detailed orders
 pub async fn list_orders_detailed(State(state): State<AppState>) -> Result<Json<Vec<OrderDetailed>>, (StatusCode, String)> {
     let orders = sqlx::query_as::<_, Order>("SELECT * FROM orders ORDER BY created_at DESC")
         .fetch_all(&state.pool)
@@ -227,7 +216,6 @@ pub async fn list_orders_detailed(State(state): State<AppState>) -> Result<Json<
     Ok(Json(result))
 }
 
-/// List queue tokens
 pub async fn list_queue(State(state): State<AppState>) -> Result<Json<Vec<QueueToken>>, (StatusCode, String)> {
     let q = sqlx::query_as::<_, QueueToken>("SELECT * FROM queue_tokens ORDER BY id ASC")
         .fetch_all(&state.pool)
@@ -237,7 +225,6 @@ pub async fn list_queue(State(state): State<AppState>) -> Result<Json<Vec<QueueT
     Ok(Json(q))
 }
 
-/// Broadcast queue manually
 pub async fn broadcast_queue(State(state): State<AppState>) -> Json<serde_json::Value> {
     broadcast_queue_inner(&state).await;
     Json(json!({"status": "queue broadcast sent"}))
@@ -254,7 +241,6 @@ async fn broadcast_queue_inner(state: &AppState) {
     }
 }
 
-/// Update order status
 pub async fn update_order_status(
     State(state): State<AppState>,
     Path(id): Path<i32>,
@@ -277,7 +263,6 @@ pub async fn update_order_status(
         return Err((StatusCode::NOT_FOUND, "Order not found".to_string()));
     }
 
-    // Update queue token status
     match new_status.as_str() {
         "ready" => {
             sqlx::query("UPDATE queue_tokens SET status = 'ready' WHERE order_id = $1")
@@ -296,7 +281,6 @@ pub async fn update_order_status(
         _ => {}
     }
 
-    // Broadcast queue update
     tokio::spawn({
         let state = state.clone();
         async move { broadcast_queue_inner(&state).await; }
@@ -305,7 +289,6 @@ pub async fn update_order_status(
     Ok(Json(json!({ "order_id": id, "new_status": new_status })))
 }
 
-/// WebSocket handler
 pub async fn ws_handler(
     ws: WebSocketUpgrade,
     State(state): State<AppState>
@@ -353,7 +336,6 @@ async fn handle_socket(mut socket: WebSocket, bcast: Arc<tokio::sync::broadcast:
     }
 }
 
-/// Sync menu
 #[derive(serde::Deserialize)]
 pub struct SinceQuery {
     pub since: Option<String>,
@@ -386,7 +368,6 @@ pub async fn sync_menu(
     Ok(Json(json!({ "menu": menu_items })))
 }
 
-/// Sync orders
 pub async fn sync_orders(
     State(state): State<AppState>,
     Query(q): Query<SinceQuery>
@@ -414,24 +395,58 @@ pub async fn sync_orders(
     Ok(Json(json!({ "orders": orders })))
 }
 
-/// Printer stub
 pub async fn print_receipt(Path(order_id): Path<i32>) -> Json<serde_json::Value> {
     Json(json!({"order_id": order_id, "status": "print job queued"}))
 }
-
-/// Drawer stub
 pub async fn open_drawer() -> Json<serde_json::Value> {
     Json(json!({"status": "ok", "note": "client should trigger cash drawer"}))
 }
 
-/// Auto-update feed
 pub async fn latest_update() -> Json<serde_json::Value> {
     let version = std::env::var("APP_VERSION").unwrap_or_else(|_| "0.1.0".to_string());
     let url = std::env::var("UPDATE_URL").unwrap_or_else(|_| "".to_string());
     Json(json!({ "version": version, "url": url }))
 }
 
-/// Root
 pub async fn root() -> &'static str {
     "Hashmato API"
+}
+
+pub async fn get_order_detailed(
+    State(state): State<AppState>,
+    Path(order_id): Path<i32>
+) -> Result<Json<OrderDetailed>, (StatusCode, String)> {
+    let order = sqlx::query_as::<_, Order>("SELECT * FROM orders WHERE id = $1")
+        .bind(order_id)
+        .fetch_one(&state.pool)
+        .await
+        .map_err(|_| (StatusCode::NOT_FOUND, "Order not found".to_string()))?;
+
+    let items = sqlx::query!(
+        r#"
+        SELECT oi.id, oi.order_id, oi.menu_item_id, oi.quantity,
+               mi.name as menu_name, mi.price as "menu_price!", mi.image_url as menu_image
+        FROM order_items oi
+        JOIN menu_items mi ON mi.id = oi.menu_item_id
+        WHERE oi.order_id = $1
+        "#,
+        order.id
+    )
+    .fetch_all(&state.pool)
+    .await
+    .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, format!("Database error: {}", e)))?;
+
+    let items_detailed: Vec<OrderItemDetailed> = items.into_iter().map(|r| {
+        OrderItemDetailed {
+            id: r.id,
+            order_id: r.order_id,
+            menu_item_id: r.menu_item_id,
+            quantity: r.quantity,
+            menu_name: r.menu_name,
+            menu_price: r.menu_price,
+            menu_image: r.menu_image,
+        }
+    }).collect();
+
+    Ok(Json(OrderDetailed { order, items: items_detailed }))
 }

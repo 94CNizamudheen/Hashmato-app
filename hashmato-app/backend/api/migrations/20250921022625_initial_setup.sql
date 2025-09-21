@@ -1,6 +1,5 @@
 
 
--- Create updated_at trigger function
 CREATE OR REPLACE FUNCTION set_updated_at()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -13,7 +12,7 @@ $$ LANGUAGE plpgsql;
 CREATE TABLE IF NOT EXISTS menu_items (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL UNIQUE,
-    price DOUBLE PRECISION NOT NULL, -- Changed from NUMERIC to DOUBLE PRECISION
+    price DOUBLE PRECISION NOT NULL, 
     available BOOLEAN NOT NULL DEFAULT true,
     image_url TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),

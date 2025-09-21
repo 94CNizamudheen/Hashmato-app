@@ -5,14 +5,14 @@ export interface AppMenuItem {
   price: number;
   available: boolean;
   image_url?: string;
-  created_at?: string;
+  created_at?: string; // keep optional for Dexie/local
   updated_at?: string;
 }
 
 // ---------- Orders ----------
 export interface OrderItem {
-  id?: number;            // DB id
-  order_id?: number;      // reference to order
+  id?: number;           // DB id
+  order_id?: number;     // reference to order
   menu_item_id: number;
   quantity: number;
 }
@@ -53,37 +53,15 @@ export interface LocalOrder {
   created_at: string;
   updated_at?: string;
   items: OrderItem[];
-  synced: 0|1;
+  synced: 0 | 1;
+}
+
+// ---------- Cart ----------
+export interface CartItem extends AppMenuItem {
+  quantity: number;
 }
 
 // ---------- Receipt ----------
-export interface ReceiptItem {
-  name: string;
-  qty: number;
-  price: number;
-}
-
-export interface ReceiptPayload {
-  order_id: number;
-  items: ReceiptItem[];
-  total: number;
-}
-
-
-export interface OrderLocal {
-  id?: number;
-  source: string;
-  status: string;
-  created_at?: string;
-  updated_at?: string;
-  items: { menu_item_id: number; quantity: number }[];
-  synced?: boolean;
-}
-
-export interface CartItem extends AppMenuItem {
-  quantity: number;
-};
-
 export interface ReceiptItem {
   name: string;
   qty: number;

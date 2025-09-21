@@ -51,3 +51,17 @@ export async function syncOrders(since?: string) {
   const params = since ? { since } : {};
   return client.get("/sync/orders", { params }).then(r => r.data);
 }
+
+export async function printReceipt(orderId: number) {
+  const res = await axios.post(`${API_BASE}/print/${orderId}`);
+  return res.data;
+}
+
+export async function openDrawer() {
+  const res = await axios.post(`${API_BASE}/drawer/open`);
+  return res.data;
+}
+export async function fetchOrder(orderId: number) {
+  const res = await client.get(`/orders/${orderId}/detailed`);
+  return res.data;
+}
