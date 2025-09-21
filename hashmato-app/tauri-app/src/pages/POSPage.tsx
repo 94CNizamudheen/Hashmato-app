@@ -21,12 +21,10 @@ export default function POSPage() {
 
   async function load() {
     const local = await db.menu.toArray();
-    console.log("local items", local);
     if (local.length > 0) setMenu(local);
 
     try {
       const remote = await api.fetchMenu();
-      console.log("remote items", remote);
       setMenu(remote);
 
       for (const it of remote) {
@@ -73,11 +71,9 @@ export default function POSPage() {
     try {
 
       const remote = await api.createOrder({ source: "pos", items: localOrder.items });
-      console.log('remote', remote)
       localOrder.synced = 1;
       await db.orders.put({ ...localOrder, id });
       const orderDetailed = await api.fetchOrder(remote.order_id);
-      console.log('orderDetailed', orderDetailed)
       setLastOrder(orderDetailed)
 
       await openDrawer();
