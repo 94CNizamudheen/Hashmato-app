@@ -1,1 +1,0 @@
-cargo:rustc-env=MIME_TYPES_GENERATED_PATH=C:\My projects\Hashmato-app\hashmato-app\backend\api\target\debug\build\mime_guess-fd54ab5d60e0d27f\out\mime_types_generated.rs

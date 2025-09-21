@@ -1,5 +1,4 @@
-
-import { AppMenuItem } from "../types"; 
+import { AppMenuItem } from "../types";
 
 interface MenuCardProps {
   item: AppMenuItem;

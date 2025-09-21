@@ -1,37 +1,40 @@
-use axum::{Router, routing::{get, post, put}};
-use crate::controllers::*;
-use crate::AppState;
+use axum::{
+    routing::{get, post, put},
+    Router,
+};
+use crate::{controllers, AppState};
 
-/// Defines all API routes
 pub fn routes() -> Router<AppState> {
     Router::new()
-        // Root
-        .route("/", get(root))
-
-        // Menu
-        .route("/menu", get(list_menu).post(create_menu_item))
-        .route("/menu/upload", post(upload_image))
-
-        // Orders
-        .route("/orders", get(list_orders).post(create_order))
-        .route("/orders/detailed", get(list_orders_detailed))
-        .route("/orders/:id/status", put(update_order_status))
-
-        // Queue
-        .route("/queue", get(list_queue))
-        .route("/broadcast_queue", post(broadcast_queue))
-
-        // WebSocket for real-time queue updates
-        .route("/ws", get(ws_handler))
-
-        // Sync endpoints (for offline-first clients)
-        .route("/sync/menu", get(sync_menu))
-        .route("/sync/orders", get(sync_orders))
-
-        // Hardware stubs
-        .route("/print/:order_id", post(print_receipt))
-        .route("/drawer/open", post(open_drawer))
-
-        // Auto-update feed
-        .route("/updates/latest.json", get(latest_update))
+        // Root endpoint
+        .route("/", get(controllers::root))
+        
+        // Menu endpoints
+        .route("/menu", get(controllers::list_menu))
+        .route("/menu", post(controllers::create_menu_item))
+        .route("/menu/sync", get(controllers::sync_menu))
+        
+        // Order endpoints
+        .route("/orders", get(controllers::list_orders))
+        .route("/orders", post(controllers::create_order))
+        .route("/orders/detailed", get(controllers::list_orders_detailed))
+        .route("/orders/:id/status", put(controllers::update_order_status))
+        .route("/orders/sync", get(controllers::sync_orders))
+        
+        // Queue endpoints
+        .route("/queue", get(controllers::list_queue))
+        .route("/queue/broadcast", post(controllers::broadcast_queue))
+        
+        // File upload
+        .route("/upload", post(controllers::upload_image))
+        
+        // WebSocket for real-time updates
+        .route("/ws", get(controllers::ws_handler))
+        
+        // Hardware integration stubs
+        .route("/print/:order_id", post(controllers::print_receipt))
+        .route("/drawer/open", post(controllers::open_drawer))
+        
+        // Auto-update endpoint
+        .route("/version", get(controllers::latest_update))
 }

@@ -1,12 +1,13 @@
 use serde::{Deserialize, Serialize};
 use sqlx::FromRow;
 use chrono::{DateTime, Utc};
+use bigdecimal::BigDecimal;
 
 #[derive(Debug, Serialize, Deserialize, FromRow)]
 pub struct MenuItem {
     pub id: i32,
     pub name: String,
-    pub price: f64,
+    pub price: BigDecimal, 
     pub available: bool,
     pub image_url: Option<String>,
     pub created_at: DateTime<Utc>,
@@ -51,7 +52,7 @@ pub struct QueueToken {
     pub created_at: DateTime<Utc>,
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, Deserialize)]
 pub struct UpdateOrderStatus {
     pub status: String,
 }
@@ -69,6 +70,6 @@ pub struct OrderItemDetailed {
     pub menu_item_id: i32,
     pub quantity: i32,
     pub menu_name: String,
-    pub menu_price: f64,
+    pub menu_price: BigDecimal,
     pub menu_image: Option<String>,
 }

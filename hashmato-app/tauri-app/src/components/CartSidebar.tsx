@@ -1,4 +1,3 @@
-import React from "react";
 import { CartItem } from "../types";
 
 interface CartSidebarProps {
@@ -7,19 +6,31 @@ interface CartSidebarProps {
   onCheckout: () => void;
 }
 
-export default function CartSidebar({ cart, setCart, onCheckout }: CartSidebarProps) {
+export default function CartSidebar({
+  cart,
+  setCart,
+  onCheckout,
+}: CartSidebarProps) {
   const total = cart.reduce((s, i) => s + i.quantity * i.price, 0);
 
   function decrease(item: CartItem) {
     if (item.quantity <= 1) {
       setCart(cart.filter((c) => c.id !== item.id));
     } else {
-      setCart(cart.map((c) => (c.id === item.id ? { ...c, quantity: c.quantity - 1 } : c)));
+      setCart(
+        cart.map((c) =>
+          c.id === item.id ? { ...c, quantity: c.quantity - 1 } : c
+        )
+      );
     }
   }
 
   function increase(item: CartItem) {
-    setCart(cart.map((c) => (c.id === item.id ? { ...c, quantity: c.quantity + 1 } : c)));
+    setCart(
+      cart.map((c) =>
+        c.id === item.id ? { ...c, quantity: c.quantity + 1 } : c
+      )
+    );
   }
 
   return (
@@ -35,15 +46,30 @@ export default function CartSidebar({ cart, setCart, onCheckout }: CartSidebarPr
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <button onClick={() => decrease(it)}>-</button>
-              <button onClick={() => increase(it)}>+</button>
+              <button
+                onClick={() => decrease(it)}
+                className="px-2 py-1 bg-gray-200 rounded"
+              >
+                -
+              </button>
+              <button
+                onClick={() => increase(it)}
+                className="px-2 py-1 bg-gray-200 rounded"
+              >
+                +
+              </button>
             </div>
           </div>
         ))}
       </div>
       <div className="mt-3">
-        <div className="text-right font-bold mb-2">Total: ${total.toFixed(2)}</div>
-        <button onClick={onCheckout} className="w-full py-2 bg-green-600 text-white rounded">
+        <div className="text-right font-bold mb-2">
+          Total: ${total.toFixed(2)}
+        </div>
+        <button
+          onClick={onCheckout}
+          className="w-full py-2 bg-green-600 text-white rounded"
+        >
           Checkout
         </button>
       </div>
