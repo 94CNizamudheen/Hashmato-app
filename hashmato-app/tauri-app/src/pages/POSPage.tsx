@@ -56,72 +56,86 @@ export default function POSPage() {
       }
     });
   }
-async function onCheckout() {
-  const localOrder: LocalOrder = {
-    source: "pos",
-    status: "pending",
-    items: cart.map((c) => ({
-      menu_item_id: c.id,
-      quantity: c.quantity,
-    })),
-    synced: 0,
-    created_at: new Date().toISOString(),
-  };
+  async function onCheckout() {
+    const localOrder: LocalOrder = {
+      source: "pos",
+      status: "pending",
+      items: cart.map((c) => ({
+        menu_item_id: c.id,
+        quantity: c.quantity,
+      })),
+      synced: 0,
+      created_at: new Date().toISOString(),
+    };
 
-  const id = await db.orders.add(localOrder);
+    const id = await db.orders.add(localOrder);
 
-  try {
+    try {
 
-    const remote = await api.createOrder({ source: "pos", items: localOrder.items });
-    console.log('remote',remote)
-    localOrder.synced = 1;
-    await db.orders.put({ ...localOrder, id });
-    const orderDetailed = await api.fetchOrder(remote.order_id);
-    console.log('orderDetailed',orderDetailed)
-    setLastOrder(orderDetailed)
+      const remote = await api.createOrder({ source: "pos", items: localOrder.items });
+      console.log('remote', remote)
+      localOrder.synced = 1;
+      await db.orders.put({ ...localOrder, id });
+      const orderDetailed = await api.fetchOrder(remote.order_id);
+      console.log('orderDetailed', orderDetailed)
+      setLastOrder(orderDetailed)
 
-    await openDrawer();
-    await printReceipt(orderDetailed);
+      await openDrawer();
+      await printReceipt(orderDetailed);
 
-  } catch (e) {
-    console.warn("order queued for sync", e);
+    } catch (e) {
+      console.warn("order queued for sync", e);
+    }
+
+    setCart([]);
+    alert("Order placed");
   }
 
-  setCart([]);
-  alert("Order placed");
-}
-
-    const filteredItems = menu.filter(item =>
+  const filteredItems = menu.filter(item =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <div className="flex h-full">
-      <div className="flex-1 p-6">
+    <div className="flex flex-col lg:flex-row h-full">
+      {/* Main Content */}
+      <div className="flex-1 p-4 sm:p-6">
+        {/* Page Header */}
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-slate-900 mb-2">Point of Sale</h1>
-          <p className="text-slate-600">Select items to add to cart</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">
+            Point of Sale
+          </h1>
+          <p className="text-slate-600 text-sm sm:text-base">
+            Select items to add to cart
+          </p>
         </div>
 
+        {/* Search Bar */}
         <div className="mb-6">
-          <div className="relative max-w-md">
+          <div className="relative w-full max-w-lg">
             <Search className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
             <input
               type="text"
               placeholder="Search menu items..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl 
+                       focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                       text-sm sm:text-base"
             />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {/* Menu Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
           {filteredItems.length === 0 ? (
             <div className="col-span-full flex flex-col items-center justify-center py-12 text-slate-400">
-              <MenuIcon className="w-16 h-16 mb-4" />
-              <p className="text-lg font-medium">No menu items found</p>
-              <p className="text-sm">Try adjusting your search or add some menu items</p>
+              <MenuIcon className="w-14 h-14 sm:w-16 sm:h-16 mb-4" />
+              <p className="text-base sm:text-lg font-medium">
+                No menu items found
+              </p>
+              <p className="text-xs sm:text-sm">
+                Try adjusting your search or add some menu items
+              </p>
             </div>
           ) : (
             filteredItems.map((item) => (
@@ -131,8 +145,18 @@ async function onCheckout() {
         </div>
       </div>
 
-      <CartSidebar cart={cart} setCart={setCart} onCheckout={onCheckout} lastOrder={lastOrder} />
+      {/* Cart Sidebar */}
+      <div className="w-full lg:w-96 border-t lg:border-t-0 lg:border-l border-slate-200">
+        <CartSidebar
+          cart={cart}
+          setCart={setCart}
+          onCheckout={onCheckout}
+          lastOrder={lastOrder}
+        />
+      </div>
+
       <PeripheralModal />
     </div>
   );
+
 }

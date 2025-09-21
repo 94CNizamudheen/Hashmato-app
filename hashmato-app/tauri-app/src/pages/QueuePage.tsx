@@ -32,21 +32,21 @@ export default function QueuePage() {
   }
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-6">📢 Queue Display</h2>
+    <div className="p-4 sm:p-6">
+      <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">📢 Queue Display</h2>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6">
         {queue.map((q) => (
           <div
             key={q.id}
-            className={`p-6 rounded-2xl shadow-md border transition transform hover:scale-105 hover:shadow-lg text-center ${statusStyles(
+            className={`p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-md border transition md:hover:scale-105 md:hover:shadow-lg text-center ${statusStyles(
               q.status
             )}`}
           >
-            <div className="text-5xl font-extrabold tracking-wider">
+            <div className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-wider">
               {q.token_number}
             </div>
-            <div className="mt-2 text-sm font-semibold uppercase">
+            <div className="mt-2 text-xs sm:text-sm lg:text-base font-semibold uppercase">
               {q.status}
             </div>
           </div>
@@ -54,4 +54,5 @@ export default function QueuePage() {
       </div>
     </div>
   );
+
 }
